@@ -1,0 +1,16 @@
+:root {
+  --main-bg-color: #faf3f0;
+  --main-primary: #dbc4f0;
+  --main-text-color: #331d2c;
+}
+@font-face {
+  font-family: "DMSans-Medium";
+  src: url(./assets/font/DMSans-Medium.ttf) format("woff2");
+}
+body {
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  font-family: "DMSans-Medium";
+  font-weight: normal;
+  font-style: normal;
+}
