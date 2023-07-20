@@ -129,13 +129,13 @@ button {
 .modal {
   position: absolute;
   width: 500px;
-  height: 50%;
+  height: fit-content;
   background-color: var(--main-bg-color);
   border-radius: 8px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 2rem 4rem;
+  padding: 2rem 4rem 0;
   z-index: 20;
 }
 .modal-title {
@@ -144,14 +144,14 @@ button {
   align-items: center;
   font-size: 30px;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--main-primary);
+  border-bottom: 1px solid var(--main-text-color);
 }
 .modal-close {
   background-color: rgba(255, 0, 0, 0.788);
   color: var(--main-bg-color);
-  width: 30px;
-  height: 30px;
-  padding: 0.3rem;
+  width: 25px;
+  height: 25px;
+  padding: 0.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,5 +162,58 @@ button {
   background-color: var(--main-text-color);
   transition: all 0.5s;
   transform: rotateY(180deg);
+}
+.modal-body {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
+}
+.cart-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+}
+.cart-qty-control {
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cart-row-qty {
+  background-color: var(--main-primary);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+.cart-total {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 2rem 2em 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: flex-end;
+  border-top: 1px solid var(--main-text-color);
+}
+.cart-btn-container {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.cart-btn {
+  font-size: 1rem;
+  padding: 0.7rem 2.5rem;
+  font-weight: 600;
+}
+.cart-btn:hover {
+  background-color: var(--main-text-color);
+  color: #fff;
+  transition: all 0.3s;
 }
 /*end modal  */

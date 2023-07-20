@@ -4,6 +4,8 @@ const modal = document.querySelector(".modal");
 const backdrop = document.querySelector(".backdrop");
 const cartBtn = document.querySelector(".cart");
 const modalCloseBtn = document.querySelector(".modal-close");
+let cartQty = document.querySelector(".cart-qty");
+
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // 1.get products
@@ -55,6 +57,38 @@ class Ui {
       }
     });
   }
+  displayCart() {
+    let result = "";
+    const cartProducts = JSON.parse(localStorage.getItem("cart")) || [];
+    console.log(cartProducts);
+    if (cartProducts.length === 0) {
+      result += `
+          <h3>سبد شما خالیست!</h3>`;
+    } else {
+      cartProducts.forEach((p) => {
+        result += `
+        <div class="cart-row">
+            <span>${cartProducts.indexOf(p) + 1}</span>
+            <h3>${p.title}</h3>
+            <span>${p.price} تومان</span>
+            <div class="cart-qty-control">
+              <span><i class="fa fa-chevron-up"></i></span>
+              <span class="cart-row-qty">${p.qty}</span>
+              <span><i class="fa fa-chevron-down"></i></span>
+            </div>
+        </div>`;
+      });
+      result += `
+      <div class="cart-total">
+        <h4>مجموع :</h4>
+        <span>2340000 تومان</span>
+      </div>
+      <div class="cart-btn-container">
+        <button class="cart-btn">پرداخت</button>
+      </div>`;
+    }
+    document.querySelector(".modal-body").innerHTML = result;
+  }
 }
 
 // 3.storage
@@ -78,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new Ui();
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
+  ui.displayCart();
   Storage.saveProducts(productsData);
 });
 
