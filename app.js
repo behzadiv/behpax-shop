@@ -1,5 +1,7 @@
 import { productsData } from "./products.js";
 
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
 // 1.get products
 
 class Products {
@@ -29,6 +31,26 @@ class Ui {
     });
     document.querySelector(".products-list").innerHTML = result;
   }
+  getAddToCartBtns() {
+    const addToCartBtns = document.querySelectorAll(".productAdd-btn");
+    const buttons = [...addToCartBtns]; /// change nodelist to array
+    buttons.map((btn) => {
+      const btnId = Number(btn.id);
+      const isInCart = cart && cart.find((p) => p.id === btnId);
+      if (isInCart) {
+        btn.innerHTML = "موجود در سبد خرید";
+        btn.disabled = true;
+      } else {
+        btn.addEventListener("click", () => {
+          btn.innerHTML = "موجود در سبد خرید";
+          btn.disabled = true;
+          const addedProduct = Storage.getProduct(btnId);
+          cart = [...cart, { ...addedProduct, qty: 1 }];
+          Storage.saveCarts(cart);
+        });
+      }
+    });
+  }
 }
 
 // 3.storage
@@ -37,6 +59,13 @@ class Storage {
   static saveProducts(productsData) {
     return localStorage.setItem("products", JSON.stringify(productsData));
   }
+  static getProduct(id) {
+    const _products = JSON.parse(localStorage.getItem("products"));
+    return _products.find((p) => p.id === id);
+  }
+  static saveCarts(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -44,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const productsData = products.getProducts();
   const ui = new Ui();
   ui.displayProducts(productsData);
-
+  ui.getAddToCartBtns();
   Storage.saveProducts(productsData);
 });
 
@@ -66,3 +95,5 @@ function showModal() {
 cartBtn.addEventListener("click", showModal);
 modalCloseBtn.addEventListener("click", closeModal);
 backdrop.addEventListener("click", closeModal);
+
+// end modal
