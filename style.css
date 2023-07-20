@@ -3,6 +3,10 @@
   --main-primary: #dbc4f0;
   --main-text-color: #331d2c;
 }
+* {
+  padding: 0;
+  margin: 0;
+}
 @font-face {
   font-family: "DMSans-Medium";
   src: url(./assets/font/DMSans-Medium.ttf) format("woff2");
@@ -22,7 +26,7 @@ body {
   background-color: #fff;
 }
 .header {
-  padding: 0.2rem 1rem;
+  padding: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -41,7 +45,7 @@ body {
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -35px;
+  top: -25px;
   left: 15px;
   font-size: small;
   color: var(--main-bg-color);
@@ -79,6 +83,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 .product-title {
   font-size: large;
@@ -87,7 +93,6 @@ button {
 .productAdd-btn {
   width: 70%;
   margin: 1rem auto;
-  margin-bottom: 1rem;
 }
 .product-img {
   background-color: #fff;
@@ -130,7 +135,7 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 0 4rem;
+  padding: 2rem 4rem;
   z-index: 20;
 }
 .modal-title {
@@ -138,6 +143,7 @@ button {
   justify-content: space-between;
   align-items: center;
   font-size: 30px;
+  padding-bottom: 1rem;
   border-bottom: 1px solid var(--main-primary);
 }
 .modal-close {
