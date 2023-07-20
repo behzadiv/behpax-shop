@@ -1,5 +1,9 @@
 import { productsData } from "./products.js";
 
+const modal = document.querySelector(".modal");
+const backdrop = document.querySelector(".backdrop");
+const cartBtn = document.querySelector(".cart");
+const modalCloseBtn = document.querySelector(".modal-close");
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // 1.get products
@@ -78,10 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // modal
-const modal = document.querySelector(".modal");
-const backdrop = document.querySelector(".backdrop");
-const cartBtn = document.querySelector(".cart");
-const modalCloseBtn = document.querySelector(".modal-close");
 
 function closeModal() {
   modal.classList.add("hidden");
