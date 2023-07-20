@@ -7,18 +7,24 @@
   font-family: "DMSans-Medium";
   src: url(./assets/font/DMSans-Medium.ttf) format("woff2");
 }
+@font-face {
+  font-family: "shabnam";
+  src: url(./assets/font/Shabnam-Medium.ttf) format("woff2");
+}
 body {
   background-color: var(--main-bg-color);
   color: var(--main-text-color);
-  font-family: "DMSans-Medium";
+  font-family: "shabnam";
   font-weight: normal;
   font-style: normal;
 }
-.header {
+.header-container {
   background-color: #fff;
+}
+.header {
   padding: 0.2rem 1rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 .cart {
@@ -30,4 +36,65 @@ body {
   left: 10px;
   font-size: large;
   color: var(--main-primary);
+}
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  background-color: var(--main-primary);
+  font-family: "shabnam";
+  cursor: pointer;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.products-list {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+.product-container {
+  border: 0;
+  width: max-content;
+  display: flex;
+  background-color: var(--main-bg-color);
+  flex-direction: column;
+  border-radius: 8px;
+  background: #faf3f0;
+  box-shadow: 16px 16px 26px #e6e0dd, -16px -16px 26px #ffffff;
+}
+.product-description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.product-title {
+  font-size: large;
+  font-weight: 600;
+}
+.productAdd-btn {
+  width: 70%;
+  margin: 1rem auto;
+  margin-bottom: 1rem;
+}
+.product-img {
+  background-color: #fff;
+  padding: 0 1rem;
+  width: 210px;
+  height: 260px;
+  margin: 0 auto;
+  border-radius: 8px 8px 0 0;
+}
+.product-price {
+  font-size: medium;
+  font-weight: 700;
+  margin-top: -1rem;
+}
+.productAdd-btn:hover {
+  background-color: var(--main-text-color);
+  color: #fff;
+  transition: all 0.3s;
 }
