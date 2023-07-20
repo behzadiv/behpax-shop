@@ -47,3 +47,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   Storage.saveProducts(productsData);
 });
+
+// modal
+const modal = document.querySelector(".modal");
+const backdrop = document.querySelector(".backdrop");
+const cartBtn = document.querySelector(".cart");
+const modalCloseBtn = document.querySelector(".modal-close");
+
+function closeModal() {
+  modal.classList.add("hidden");
+  backdrop.classList.add("hidden");
+}
+function showModal() {
+  modal.classList.remove("hidden");
+  backdrop.classList.remove("hidden");
+}
+
+cartBtn.addEventListener("click", showModal);
+modalCloseBtn.addEventListener("click", closeModal);
+backdrop.addEventListener("click", closeModal);
