@@ -8,6 +8,7 @@ let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
 
+let cart = []
 
 // 1.get products
 
@@ -70,9 +71,9 @@ class Ui {
             <span>${cart.price} تومان</span>
             </div>
             <div class="cart-qty-control">
-              <span><i class="fa fa-chevron-up"></i></span>
+              <span class="increment"><i class="fa fa-chevron-up"></i></span>
               <span class="cart-row-qty">${cart.qty}</span>
-              <span><i class="fa fa-chevron-down"></i></span>
+              <span class="decrement"><i class="fa fa-chevron-down"></i></span>
             </div>`;
     cartList.appendChild(div);
   }
