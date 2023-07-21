@@ -5,8 +5,9 @@ const backdrop = document.querySelector(".backdrop");
 const cartBtn = document.querySelector(".cart");
 const modalCloseBtn = document.querySelector(".modal-close");
 let cartQty = document.querySelector(".cart-qty");
+let cartTotal = document.querySelector(".cart-total");
+let cartList = document.querySelector(".cart-list");
 
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 // 1.get products
 
@@ -50,44 +51,39 @@ class Ui {
         btn.addEventListener("click", () => {
           btn.innerHTML = "موجود در سبد خرید";
           btn.disabled = true;
-          const addedProduct = Storage.getProduct(btnId);
-          cart = [...cart, { ...addedProduct, qty: 1 }];
-          Storage.saveCarts(cart);
+          const addedProduct = { ...Storage.getProduct(btnId), qty: 1 };
+          cart = [...cart, addedProduct];
+          this.addCartItem(addedProduct);
+          this.setCartValue(cart);
         });
       }
     });
   }
-  displayCart() {
+  addCartItem(cart) {
     let result = "";
-    const cartProducts = JSON.parse(localStorage.getItem("cart")) || [];
-    console.log(cartProducts);
-    if (cartProducts.length === 0) {
-      result += `
-          <h3>سبد شما خالیست!</h3>`;
-    } else {
-      cartProducts.forEach((p) => {
-        result += `
-        <div class="cart-row">
-            <span>${cartProducts.indexOf(p) + 1}</span>
-            <h3>${p.title}</h3>
-            <span>${p.price} تومان</span>
+    const div = document.createElement("div");
+    div.classList.add("cart-row");
+    div.innerHTML = `
+            <img class="cart-img" src="${cart.imageUrl}" alt="" />
+            <div class="cart-desc">
+            <h3>${cart.title}</h3>
+            <span>${cart.price} تومان</span>
+            </div>
             <div class="cart-qty-control">
               <span><i class="fa fa-chevron-up"></i></span>
-              <span class="cart-row-qty">${p.qty}</span>
+              <span class="cart-row-qty">${cart.qty}</span>
               <span><i class="fa fa-chevron-down"></i></span>
-            </div>
-        </div>`;
-      });
-      result += `
-      <div class="cart-total">
-        <h4>مجموع :</h4>
-        <span>2340000 تومان</span>
-      </div>
-      <div class="cart-btn-container">
-        <button class="cart-btn">پرداخت</button>
-      </div>`;
-    }
-    document.querySelector(".modal-body").innerHTML = result;
+            </div>`;
+    cartList.appendChild(div);
+  }
+  setCartValue(cart) {
+    let tempCartQty = 0;
+    const totalPrice = cart.reduce((acc, curr) => {
+      tempCartQty += parseInt(curr.qty);
+      return parseInt(acc) + parseInt(curr.price) * curr.qty;
+    }, 0);
+    cartTotal.innerHTML = ` مجموع : ${totalPrice} تومان`;
+    cartQty.innerHTML = tempCartQty;
   }
 }
 
@@ -101,9 +97,6 @@ class Storage {
     const _products = JSON.parse(localStorage.getItem("products"));
     return _products.find((p) => p.id === id);
   }
-  static saveCarts(cart) {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -112,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new Ui();
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
-  ui.displayCart();
   Storage.saveProducts(productsData);
 });
 

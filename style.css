@@ -140,18 +140,18 @@ button {
 }
 .modal-title {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20rem;
   align-items: center;
   font-size: 30px;
   padding-bottom: 1rem;
-  border-bottom: 1px solid var(--main-text-color);
 }
 .modal-close {
   background-color: rgba(255, 0, 0, 0.788);
   color: var(--main-bg-color);
-  width: 25px;
-  height: 25px;
-  padding: 0.1rem;
+  width: 20px;
+  height: 20px;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -164,12 +164,10 @@ button {
   transform: rotateY(180deg);
 }
 .modal-body {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem 2rem 2rem 2rem;
+}
+.cart-list {
+  border-top: 1px solid var(--main-text-color);
 }
 .cart-row {
   width: 100%;
@@ -177,6 +175,19 @@ button {
   align-items: center;
   justify-content: space-between;
   font-weight: 700;
+  margin-top: 0.5rem;
+}
+.cart-img {
+  border-radius: 10px;
+  padding: 0 2rem;
+  width: 90px;
+  height: 90px;
+}
+.cart-desc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 .cart-qty-control {
   cursor: pointer;
@@ -194,7 +205,9 @@ button {
 .cart-total {
   width: 100%;
   font-size: 1.2rem;
-  padding: 2rem 2em 0;
+  font-weight: 700;
+  margin-top: 1rem;
+  padding: 1rem 0 2rem 0;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -210,6 +223,10 @@ button {
   font-size: 1rem;
   padding: 0.7rem 2.5rem;
   font-weight: 600;
+}
+.clear-cart{
+  background-color: transparent;
+  border: 1px solid var(--main-primary);
 }
 .cart-btn:hover {
   background-color: var(--main-text-color);
