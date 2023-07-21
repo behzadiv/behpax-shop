@@ -7,7 +7,9 @@ const modalCloseBtn = document.querySelector(".modal-close");
 let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
+let clearCart = document.querySelector(".clear-cart");
 
+let cart = [];
 // 1.get products
 
 class Products {
@@ -38,7 +40,6 @@ class Ui {
     document.querySelector(".products-list").innerHTML = result;
   }
   getAddToCartBtns() {
-    let cart = Storage.getCart() || [];
     const addToCartBtns = document.querySelectorAll(".productAdd-btn");
     const buttons = [...addToCartBtns]; /// change nodelist to array
     buttons.map((btn) => {
@@ -88,10 +89,19 @@ class Ui {
     cartTotal.innerHTML = ` مجموع : ${totalPrice} تومان`;
     cartQty.innerHTML = tempCartQty;
   }
-  setupApp(){
-    const cart = Storage.getCart()||[]
-    cart.forEach(item=>this.addCartItem(item))
-    cartQty.innerHTML=cart.length
+  setupApp() {
+    cart = Storage.getCart();
+    cart.forEach((item) => this.addCartItem(item));
+    cartQty.innerHTML = cart.length;
+  }
+  cartLogic() {
+    clearCart.addEventListener("click", () => {
+      cart.forEach((cartItem) => this.removeItem(cartItem.id));
+    });
+  }
+  removeItem(id) {
+    cart = cart.filter((item) => item.id !== parseInt(id));
+    Storage.saveCart(cart);
   }
 }
 
@@ -106,7 +116,10 @@ class Storage {
     return _products.find((p) => p.id === id);
   }
   static getCart() {
-    return JSON.parse(localStorage.getItem("cart"));
+    return JSON.parse(localStorage.getItem("cart")) || [];
+  }
+  static saveCart(cart) {
+    return localStorage.setItem("cart", JSON.stringify(cart));
   }
 }
 
@@ -114,9 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const products = new Products();
   const productsData = products.getProducts();
   const ui = new Ui();
+  ui.setupApp();
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
-  ui.setupApp();
+  ui.cartLogic();
   Storage.saveProducts(productsData);
 });
 
