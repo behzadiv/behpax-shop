@@ -8,8 +8,6 @@ let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
 
-let cart = []
-
 // 1.get products
 
 class Products {
@@ -40,6 +38,7 @@ class Ui {
     document.querySelector(".products-list").innerHTML = result;
   }
   getAddToCartBtns() {
+    let cart = Storage.getCart() || [];
     const addToCartBtns = document.querySelectorAll(".productAdd-btn");
     const buttons = [...addToCartBtns]; /// change nodelist to array
     buttons.map((btn) => {
@@ -56,6 +55,7 @@ class Ui {
           cart = [...cart, addedProduct];
           this.addCartItem(addedProduct);
           this.setCartValue(cart);
+          localStorage.setItem("cart", JSON.stringify(cart));
         });
       }
     });
@@ -86,6 +86,11 @@ class Ui {
     cartTotal.innerHTML = ` مجموع : ${totalPrice} تومان`;
     cartQty.innerHTML = tempCartQty;
   }
+  setupApp(){
+    const cart = Storage.getCart()||[]
+    cart.forEach(item=>this.addCartItem(item))
+    cartQty.innerHTML=cart.length
+  }
 }
 
 // 3.storage
@@ -98,6 +103,9 @@ class Storage {
     const _products = JSON.parse(localStorage.getItem("products"));
     return _products.find((p) => p.id === id);
   }
+  static getCart() {
+    return JSON.parse(localStorage.getItem("cart"));
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -106,6 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new Ui();
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
+  ui.setupApp()
   Storage.saveProducts(productsData);
 });
 
