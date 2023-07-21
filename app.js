@@ -74,7 +74,9 @@ class Ui {
               <span class="increment"><i class="fa fa-chevron-up"></i></span>
               <span class="cart-row-qty">${cart.qty}</span>
               <span class="decrement"><i class="fa fa-chevron-down"></i></span>
-            </div>`;
+            </div>
+            <span class="item-delete"><i class="fa fa-trash-alt"></i></span>
+            `;
     cartList.appendChild(div);
   }
   setCartValue(cart) {
@@ -114,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ui = new Ui();
   ui.displayProducts(productsData);
   ui.getAddToCartBtns();
-  ui.setupApp()
+  ui.setupApp();
   Storage.saveProducts(productsData);
 });
 

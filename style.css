@@ -202,6 +202,11 @@ button {
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
 }
+.item-delete{
+  font-size: 26px;
+  color: red;
+  cursor: pointer;
+}
 .cart-total {
   width: 100%;
   font-size: 1.2rem;
