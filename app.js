@@ -11,6 +11,7 @@ let cartList = document.querySelector(".cart-list");
 let clearCartBtn = document.querySelector(".clear-cart");
 
 let cart = [];
+let buttonsDom = [];
 // 1.get products
 
 class Products {
@@ -43,6 +44,7 @@ class Ui {
   getAddToCartBtns() {
     const addToCartBtns = document.querySelectorAll(".productAdd-btn");
     const buttons = [...addToCartBtns]; /// change nodelist to array
+    buttonsDom = buttons;
     buttons.map((btn) => {
       const btnId = parseInt(btn.dataset.id);
       const isInCart = cart.find((p) => p.id === btnId);
@@ -99,15 +101,24 @@ class Ui {
     clearCartBtn.addEventListener("click", () => this.clearCart());
   }
   removeItem(id) {
-    cart = cart.filter((item) => item.id !== parseInt(id));
+    cart = cart.filter((item) => item.id !== id);
     this.setCartValue(cart);
     Storage.saveCart(cart);
+    this.getSingleButton(id);
   }
   clearCart() {
-    cart.forEach((cartItem) => this.removeItem(cartItem.id));
+    cart.forEach((cartItem) => this.removeItem(parseInt(cartItem.id)));
     while (cartList.children.length) {
       cartList.removeChild(cartList.children[0]); //remove cart items
     }
+  }
+  getSingleButton(id) {
+    const btn = buttonsDom.find((btn) => parseInt(btn.dataset.id) === id);
+    btn.innerHTML = `
+     <i class="fa fa-cart-plus fa-lg"></i>
+      افزودن به سبد خرید
+      `;
+    btn.disabled = false;
   }
 }
 
