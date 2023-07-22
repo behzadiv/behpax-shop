@@ -68,6 +68,7 @@ class Ui {
     let result = "";
     const div = document.createElement("div");
     div.classList.add("cart-row");
+    div.dataset.id = `"${cart.id}"`;
     div.innerHTML = `
             <img class="cart-img" src="${cart.imageUrl}" alt="" />
             <div class="cart-desc">
@@ -75,11 +76,11 @@ class Ui {
             <span>${cart.price} تومان</span>
             </div>
             <div class="cart-qty-control">
-              <span class="increment" data-id="${cart.id}"><i class="fa fa-chevron-up"></i></span>
+              <i class="fa fa-chevron-up" data-id="${cart.id}"></i>
               <span class="cart-row-qty">${cart.qty}</span>
-              <span class="decrement" data-id="${cart.id}"><i class="fa fa-chevron-down"></i></span>
+              <i class="fa fa-chevron-down" data-id="${cart.id}"></i>
             </div>
-            <span class="item-delete" data-id="${cart.id}"><i class="fa fa-trash-alt"></i></span>
+            <span class="item-delete"><i class="fa fa-trash-alt" data-id="${cart.id}"></i></span>
             `;
     cartList.appendChild(div);
   }
@@ -99,6 +100,16 @@ class Ui {
   }
   cartLogic() {
     clearCartBtn.addEventListener("click", () => this.clearCart());
+    cartList.addEventListener("click", (e) => {
+      let className = e.target.classList[1];
+      switch (className) {
+        case "fa-chevron-up":
+          return this.incrementCartItem(e);
+
+        default:
+          break;
+      }
+    });
   }
   removeItem(id) {
     cart = cart.filter((item) => item.id !== id);
@@ -119,6 +130,15 @@ class Ui {
       افزودن به سبد خرید
       `;
     btn.disabled = false;
+  }
+  incrementCartItem(event) {
+    const element = event.target;
+    let cartId = parseInt(event.target.dataset.id);
+    const findedCart = cart.find((c) => c.id === cartId);
+    findedCart.qty++;
+    Storage.saveCart(cart);
+    this.setCartValue(cart);
+    element.nextElementSibling.innerHTML = findedCart.qty;
   }
 }
 
