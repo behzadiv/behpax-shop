@@ -80,7 +80,7 @@ class Ui {
               <span class="cart-row-qty">${cart.qty}</span>
               <i class="fa fa-chevron-down" data-id="${cart.id}"></i>
             </div>
-            <span class="item-delete"><i class="fa fa-trash-alt" data-id="${cart.id}"></i></span>
+            <i class="fa fa-trash-alt" data-id="${cart.id}"></i>
             `;
     cartList.appendChild(div);
   }
@@ -105,7 +105,10 @@ class Ui {
       switch (className) {
         case "fa-chevron-up":
           return this.incrementCartItem(e);
-
+        case "fa-chevron-down":
+          return this.decrementCartItem(e);
+        case "fa-trash-alt":
+          return this.removeCartItem(e);
         default:
           break;
       }
@@ -139,6 +142,26 @@ class Ui {
     Storage.saveCart(cart);
     this.setCartValue(cart);
     element.nextElementSibling.innerHTML = findedCart.qty;
+  }
+  decrementCartItem(event) {
+    const element = event.target;
+    let cartId = parseInt(event.target.dataset.id);
+    const findedCart = cart.find((c) => c.id === cartId);
+    if (findedCart.qty ===1) {
+      this.removeItem(findedCart.id)
+      element.parentNode.parentNode.remove()
+    }
+    findedCart.qty--;
+    Storage.saveCart(cart);
+    this.setCartValue(cart);
+    element.previousElementSibling.innerHTML = findedCart.qty;
+  }
+  removeCartItem(event) {
+    const element = event.target;
+    let cartId = parseInt(event.target.dataset.id);
+    const findedCart = cart.find((c) => c.id === cartId);
+    this.removeItem(findedCart.id)
+    element.parentNode.remove();
   }
 }
 
