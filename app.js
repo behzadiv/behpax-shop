@@ -8,7 +8,7 @@ let productList = document.querySelector(".products-list");
 let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
-let clearCart = document.querySelector(".clear-cart");
+let clearCartBtn = document.querySelector(".clear-cart");
 
 let cart = [];
 // 1.get products
@@ -73,11 +73,11 @@ class Ui {
             <span>${cart.price} تومان</span>
             </div>
             <div class="cart-qty-control">
-              <span class="increment"><i class="fa fa-chevron-up"></i></span>
+              <span class="increment" data-id="${cart.id}"><i class="fa fa-chevron-up"></i></span>
               <span class="cart-row-qty">${cart.qty}</span>
-              <span class="decrement"><i class="fa fa-chevron-down"></i></span>
+              <span class="decrement" data-id="${cart.id}"><i class="fa fa-chevron-down"></i></span>
             </div>
-            <span class="item-delete"><i class="fa fa-trash-alt"></i></span>
+            <span class="item-delete" data-id="${cart.id}"><i class="fa fa-trash-alt"></i></span>
             `;
     cartList.appendChild(div);
   }
@@ -96,14 +96,18 @@ class Ui {
     cartQty.innerHTML = cart.length;
   }
   cartLogic() {
-    clearCart.addEventListener("click", () => {
-      cart.forEach((cartItem) => this.removeItem(cartItem.id));
-    });
+    clearCartBtn.addEventListener("click", () => this.clearCart());
   }
   removeItem(id) {
     cart = cart.filter((item) => item.id !== parseInt(id));
     this.setCartValue(cart);
     Storage.saveCart(cart);
+  }
+  clearCart() {
+    cart.forEach((cartItem) => this.removeItem(cartItem.id));
+    while (cartList.children.length) {
+      cartList.removeChild(cartList.children[0]); //remove cart items
+    }
   }
 }
 
