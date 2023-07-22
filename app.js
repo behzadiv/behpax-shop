@@ -4,6 +4,7 @@ const modal = document.querySelector(".modal");
 const backdrop = document.querySelector(".backdrop");
 const cartBtn = document.querySelector(".cart");
 const modalCloseBtn = document.querySelector(".modal-close");
+let productList = document.querySelector(".products-list");
 let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
@@ -31,20 +32,20 @@ class Ui {
             <h5 class="product-title">${product.title}</h5>
             <span class="product-price">${product.price} تومان </span>
           </div>
-            <button class="productAdd-btn" id=${product.id}>
+            <button class="productAdd-btn" data-id=${product.id}>
             <i class="fa fa-cart-plus fa-lg"></i>
              افزودن به سبد خرید
              </button>
         </div>`;
     });
-    document.querySelector(".products-list").innerHTML = result;
+    productList.innerHTML = result;
   }
   getAddToCartBtns() {
     const addToCartBtns = document.querySelectorAll(".productAdd-btn");
     const buttons = [...addToCartBtns]; /// change nodelist to array
     buttons.map((btn) => {
-      const btnId = Number(btn.id);
-      const isInCart = cart && cart.find((p) => p.id === btnId);
+      const btnId = parseInt(btn.dataset.id);
+      const isInCart = cart.find((p) => p.id === btnId);
       if (isInCart) {
         btn.innerHTML = "موجود در سبد خرید";
         btn.disabled = true;
@@ -101,6 +102,7 @@ class Ui {
   }
   removeItem(id) {
     cart = cart.filter((item) => item.id !== parseInt(id));
+    this.setCartValue(cart);
     Storage.saveCart(cart);
   }
 }
