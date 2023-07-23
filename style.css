@@ -166,9 +166,6 @@ button {
 .modal-body {
   padding: 1rem 2rem 2rem 2rem;
 }
-.cart-list {
-  border-top: 1px solid var(--main-text-color);
-}
 .cart-row {
   width: 100%;
   display: flex;
@@ -202,14 +199,14 @@ button {
   padding: 0.2rem 0.5rem;
   border-radius: 5px;
 }
-.item-delete{
+.item-delete {
   font-size: 26px;
   color: red;
   cursor: pointer;
 }
 .cart-total {
   width: 100%;
-  font-size: 1.2rem;
+  font-size: 18px;
   font-weight: 700;
   margin-top: 1rem;
   padding: 1rem 0 2rem 0;
@@ -217,7 +214,6 @@ button {
   align-items: center;
   gap: 1rem;
   justify-content: flex-end;
-  border-top: 1px solid var(--main-text-color);
 }
 .cart-btn-container {
   width: 100%;
@@ -229,7 +225,7 @@ button {
   padding: 0.7rem 2.5rem;
   font-weight: 600;
 }
-.clear-cart{
+.clear-cart {
   background-color: transparent;
   border: 1px solid var(--main-primary);
 }
@@ -239,3 +235,49 @@ button {
   transition: all 0.3s;
 }
 /*end modal  */
+
+@media (max-width: 650px) {
+  .modal {
+    width: 300px;
+    padding: 2rem 1rem 0;
+  }
+  .modal-title {
+    gap: 8rem;
+    font-size: 24px;
+  }
+  .modal-close {
+    width: 10px;
+    height: 10px;
+    padding: 0.6rem;
+  }
+  .cart-row {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+  .cart-img {
+    border-radius: 5px;
+    padding: 0.2rem;
+    width: 55px;
+    height: 55px;
+  }
+  .cart-desc {
+    font-size: 10px;
+  }
+  .cart-qty-control {
+    font-size: 12px;
+  }
+  .cart-row-qty {
+    padding: 0.1rem 0.3rem;
+  }
+  .cart-btn-container {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+  .cart-btn {
+    font-size: 12px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+  }
+}
