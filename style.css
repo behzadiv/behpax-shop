@@ -236,6 +236,27 @@ button {
 }
 /*end modal  */
 
+.search-container {
+  text-align: center;
+  padding: 2rem;
+}
+input[type="text"] {
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  transition:all .3s;
+}
+input[type="text"]:focus {
+  border: 1px solid var(--main-primary);
+}
+::placeholder{
+  opacity: .3;
+  font-family: shabnam;
+  font-weight: 500;
+}
 @media (max-width: 650px) {
   .modal {
     width: 300px;

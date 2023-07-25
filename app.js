@@ -9,6 +9,7 @@ let cartQty = document.querySelector(".cart-qty");
 let cartTotal = document.querySelector(".cart-total");
 let cartList = document.querySelector(".cart-list");
 let clearCartBtn = document.querySelector(".clear-cart");
+const searchInput = document.querySelector("#search-input");
 
 let cart = [];
 let buttonsDom = [];
@@ -25,20 +26,24 @@ class Products {
 class Ui {
   displayProducts(productsData) {
     let result = "";
-    productsData.forEach((product) => {
-      result += `
-        <div class="product-container" id="productId">
-          <img class="product-img" src="${product.imageUrl}" alt="" />
-          <div class="product-description">
-            <h5 class="product-title">${product.title}</h5>
-            <span class="product-price">${product.price} تومان </span>
-          </div>
-            <button class="productAdd-btn" data-id=${product.id}>
-            <i class="fa fa-cart-plus fa-lg"></i>
-             افزودن به سبد خرید
-             </button>
-        </div>`;
-    });
+    if (!productsData.length) {
+      result += `<p>محصول مورد نظر یافت نشد !</p>`;
+    } else {
+      productsData.forEach((product) => {
+        result += `
+          <div class="product-container" id="productId">
+            <img class="product-img" src="${product.imageUrl}" alt="" />
+            <div class="product-description">
+              <h5 class="product-title">${product.title}</h5>
+              <span class="product-price">${product.price} تومان </span>
+            </div>
+              <button class="productAdd-btn" data-id=${product.id}>
+              <i class="fa fa-cart-plus fa-lg"></i>
+               افزودن به سبد خرید
+               </button>
+          </div>`;
+      });
+    }
     productList.innerHTML = result;
   }
   getAddToCartBtns() {
@@ -147,9 +152,9 @@ class Ui {
     const element = event.target;
     let cartId = parseInt(event.target.dataset.id);
     const findedCart = cart.find((c) => c.id === cartId);
-    if (findedCart.qty ===1) {
-      this.removeItem(findedCart.id)
-      element.parentNode.parentNode.remove()
+    if (findedCart.qty === 1) {
+      this.removeItem(findedCart.id);
+      element.parentNode.parentNode.remove();
     }
     findedCart.qty--;
     Storage.saveCart(cart);
@@ -160,8 +165,18 @@ class Ui {
     const element = event.target;
     let cartId = parseInt(event.target.dataset.id);
     const findedCart = cart.find((c) => c.id === cartId);
-    this.removeItem(findedCart.id)
+    this.removeItem(findedCart.id);
     element.parentNode.remove();
+  }
+  searchProduct() {
+    const products = JSON.parse(localStorage.getItem("products"));
+    searchInput.addEventListener("input", (e) => {
+      let inputText = e.target.value;
+      const filterProduct = products.filter((product) =>
+        product.title.includes(inputText)
+      );
+      this.displayProducts(filterProduct);
+    });
   }
 }
 
@@ -192,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ui.getAddToCartBtns();
   ui.cartLogic();
   Storage.saveProducts(productsData);
+  ui.searchProduct();
 });
 
 // modal
