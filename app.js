@@ -13,6 +13,14 @@ const searchInput = document.querySelector("#search-input");
 
 let cart = [];
 let buttonsDom = [];
+const debounce = (fn, delay = 1000) => {
+  let timerId = null;
+  return (...args) => {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => fn(...args), delay);
+  };
+};
+
 // 1.get products
 
 class Products {
@@ -168,15 +176,14 @@ class Ui {
     this.removeItem(findedCart.id);
     element.parentNode.remove();
   }
-  searchProduct() {
+  searchProduct(...args) {
     const products = JSON.parse(localStorage.getItem("products"));
-    searchInput.addEventListener("input", (e) => {
-      let inputText = e.target.value;
-      const filterProduct = products.filter((product) =>
-        product.title.includes(inputText)
-      );
-      this.displayProducts(filterProduct);
-    });
+    const filterProduct = products.filter((product) =>
+      product.title.includes(args)
+    );
+    console.log(filterProduct);
+    const newUIBySearch = new Ui();
+    newUIBySearch.displayProducts(filterProduct);
   }
 }
 
@@ -207,7 +214,11 @@ document.addEventListener("DOMContentLoaded", () => {
   ui.getAddToCartBtns();
   ui.cartLogic();
   Storage.saveProducts(productsData);
-  ui.searchProduct();
+  const onInput = debounce(ui.searchProduct, 500);
+  searchInput.addEventListener("input", (e) => {
+    let text = e.target.value.trim();
+    onInput(text);
+  });
 });
 
 // modal
