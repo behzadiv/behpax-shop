@@ -248,6 +248,8 @@ input[type="text"] {
   font-weight: 600;
   outline: none;
   transition:all .3s;
+  font-family: shabnam;
+  font-weight: 300;
 }
 input[type="text"]:focus {
   border: 1px solid var(--main-primary);
